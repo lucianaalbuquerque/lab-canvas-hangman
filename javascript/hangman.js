@@ -1,36 +1,59 @@
 class Hangman {
   constructor(words) {
     this.words = words;
-    // ... your code goes here
+    this.letters = [];
+    this.secretWord = '';
+    this.guessedLetters = '';
+    this.errorsLeft = 10;
   }
 
   pickWord() {
-    // ... your code goes here
+    let randomIndex = Math.floor(Math.random() * this.words.length + 1); 
+    return this.words[randomIndex];
   }
 
   checkIfLetter(keyCode) {
-    // ... your code goes here
+    if(keyCode.matches("[a-zA-Z]+")) {
+      return true;
+    } 
+      return false;
+    
   }
 
   checkClickedLetters(letter) {
-    // ... your code goes here
+    this.letters.find( letter => {
+      if (this.letters.includes(letter)) {
+        return true;
+      } else {
+        return false;
+      }
+    })
   }
 
   addCorrectLetter(letter) {
-    // ... your code goes here
+    this.guessedLetters += letter;
   }
 
   addWrongLetter(letter) {
-    // ... your code goes here
+    this.errorsLeft -= 1;
+    if (!this.letters.includes(letter)) {
+      this.letters.push(letter);
+    }
   }
 
   checkGameOver() {
-    // ... your code goes here
+    if (this.errorsLeft > 0 ) {
+      return false
+    } else if (this.errorsLeft = 0 ) {
+      return true;
+    }
   }
 
   checkWinner() {
-    // ... your code goes here
-  }
+    if (this.guessedLetters.length === this.secretWord.length) {
+      return true;
+    }
+  };
 }
 
 let hangman;
@@ -41,15 +64,15 @@ if (startGameButton) {
   startGameButton.addEventListener('click', event => {
     hangman = new Hangman(['node', 'javascript', 'react', 'miami', 'paris', 'amsterdam', 'lisboa']);
 
-    // HINT (uncomment when start working on the canvas portion of the lab)
-    // hangman.secretWord = hangman.pickWord();
-    // hangmanCanvas = new HangmanCanvas(hangman.secretWord);
+    hangman.secretWord = hangman.pickWord();
+    hangmanCanvas = new HangmanCanvas(hangman.secretWord);
 
-    // ... your code goes here
+    hangmanCanvas.createBoard();
   });
 }
 
 document.addEventListener('keydown', event => {
+  
   // React to user pressing a key
   // ... your code goes here
 });
